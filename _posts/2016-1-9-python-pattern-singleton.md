@@ -1,12 +1,8 @@
 ---
 layout: post
 title: design-pattern-of-python
-tags:
- - python
- - blog
- - jekyll
- - github
-category: python
+tags: [python, patterns]
+category: Python
 ---
 
 结构型设计模式有:
