@@ -6,7 +6,8 @@ layout: default
   {% for post in site.posts %}
     <article class="post">
 
-      <h2><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h2>
+    	<h2><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h2>
+    	<p>{{ post.date | date: "%B %e, %Y" }}</p>
 
       <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
     </article>
