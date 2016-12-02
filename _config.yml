@@ -81,6 +81,16 @@ gems:
   - jekyll-feed # Create an Atom feed using the official Jekyll feed gem
   - jekyll-archives # Create post archives by dates, tags, and categoies
 
+jekyll-archives:
+  enabled: []
+  layout: 'archive'
+  permalinks:
+    year: '/:year/'
+    month: '/:year/:month/'
+    day: '/:year/:month/:day/'
+    tag: '/tag/:name/'
+    category: '/category/:name/'
+
 # Exclude these files from your production _site
 exclude:
   - Gemfile
