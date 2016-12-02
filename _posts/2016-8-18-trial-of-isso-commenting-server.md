@@ -16,7 +16,8 @@ categoreis: python
 介绍部分在文档里面都有，概括就是基于python语言开发的评论系统，使用轻量级数据库SQLite，支持Disqus、WordPress评论的导入，可配置的js客户端。
 
 # 服务器的安装
-以linux（ubuntu）系统为例。
+
+## 以linux（ubuntu）系统为例。
 
 1.安装python的虚拟环境，创建目录isso, 创建虚拟环境`.isso_venv`，并安装`isso`软件包。
 
@@ -29,6 +30,7 @@ pip install isso
 ```
 
 2.isso配置文件
+
 简单的配置如下：
 
 ````ini
@@ -92,9 +94,12 @@ curl http://localhost/js/embed.min.js  # 测试服务器的js文件
 前端展示部分还需要使用nginx代理，可以避免跨域问题等等等。
 
 # 客户端加载
-1.Nginx代理。
+
+## 1.Nginx代理。
+
 评论系统大多是准备集成在已有的web server上，站点本身已经有特定的首页，评论后台为其他提供API服务即可。
 其中一个做法，将isso服务器挂在在nginx的子目录，代理isso服务。
+
 Nginx配置如下：
 
 ```nginx
@@ -111,7 +116,8 @@ Nginx配置如下：
 
 当然可以可以使用虚拟主机的，详细做法官网有介绍。见https://posativ.org/isso/docs/quickstart/#id3
 
-2.客户端加载评论。
+## 2.客户端加载评论。
+
 在页面上添加脚本。
 
 ```html
@@ -135,7 +141,8 @@ data-isso-vote: 允许投票
 
 # 其他的功能
 
-1.评论审查功能
+## 1.评论审查功能
+
 开启审查功能，启用邮件通知。
 
 ```ini
@@ -163,10 +170,12 @@ timeout = 30
 
 开启评论审查功能后，用户的新评论会触发isso发送通知邮件到管理员。邮件内容包含新用户评论信息，删除评论的链接和激活评论的链接。审查通过的评论才能被其他用户看到。
 
-2.多个页面的评论
+## 2.多个页面的评论
+
 在多个页面添加scritps,创建评论时会自动带上当前的相对URI, 并保存在评论表中。
 
-3.评论排列问题：
+## 3.评论排列问题：
+
 client scripts 中：
 
 ```js
@@ -179,7 +188,7 @@ data-isso-vote  // 允许评论
 isso的加载配置和客户端scrips加载均有配置是否同意评论自身（自己回复自己），但是在vote（投票）上，却是不可以自己给自己投票。
 即是相同的IP显示为一个用户，同一个IP不允许upvote或者downvote。（我目前试用是这样的情况）。
 
-4.评论的导出csv。
+## 4.评论的导出csv。
 
 ```bash
 echo -e '"page: URI","page: title","ID","mode","created on","modified on","author: name","author: email","author: website","author: IP","likes","dislikes","voters","text"\n'"$(sqlite3 comments.db -csv 'SELECT threads.uri, threads.title, comments.id, comments.mode, datetime(comments.created, "unixepoch", "localtime"), datetime(comments.modified, "unixepoch", "localtime"), comments.author, comments.email, comments.website, comments.remote_addr, comments.likes, comments.dislikes, comments.voters,comments.text FROM comments INNER JOIN threads ON comments.tid=threads.id')" > export.csv
@@ -192,7 +201,8 @@ echo -e '"page: URI","page: title","ID","mode","created on","modified on","autho
 ```
 
 # 一些坑。
-1.客户端放置script脚本的html文件要求。
+
+## 1.客户端放置script脚本的html文件要求。
 
 ```python
 # isso/utils/parse.py, line 29~30
@@ -204,5 +214,6 @@ echo -e '"page: URI","page: title","ID","mode","created on","modified on","autho
 
 要求html文件的最后一个node必须是html，也就是在html文件最后来个注释块是不行的。（这里还没有弄懂为什么）
 
-2.react中加载客户端的方法。
+## 2.react中加载客户端的方法。
+
 不能直接粘贴上面的客户端scripts要相应页面。应该document.createElemen("script"),document.createElement("section"),并给之赋予相对应的属性，"isso-thread", "src", "data-isso", "data-isso-lang", "data-isso-vote"等。
