@@ -47,9 +47,9 @@ pip instlal psycopg2
 DATABASES = {
      'default': {
           'ENGINGE': 'django.db.backends.postgresql',
-          'NAME': 'griverdb',
-          'USER': 'griver',
-          'PASSWORD': 'gstar!@#',
+          'NAME': 'dbname',
+          'USER': 'dbuser',
+          'PASSWORD': 'password',
           'HOST': '127.0.0.1',
           'PORT': '5432'
      }
